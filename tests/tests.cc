@@ -109,6 +109,28 @@ TEST_CASE("Additions", "two additions") {
                     std::invalid_argument);
 }
 
+TEST_CASE("Additions", "two additions same number account") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  auto accounts = atm.GetAccounts();
+  REQUIRE(accounts.contains({12345678, 1234}));
+  REQUIRE(accounts.size() == 1);
+
+  Account sam_account = accounts[{12345678, 1234}];
+  REQUIRE(sam_account.owner_name == "Sam Sepiol");
+  REQUIRE(sam_account.balance == 300.30);
+
+  auto transactions = atm.GetTransactions();
+  REQUIRE(accounts.contains({12345678, 1234}));
+  REQUIRE(accounts.size() == 1);
+  std::vector<std::string> empty;
+  REQUIRE(transactions[{12345678, 1234}] == empty);
+
+  Atm atm2;
+  REQUIRE_THROWS_AS(atm2.RegisterAccount(12345678, 32, "Sam Sepiol", 300.30),
+                    std::invalid_argument);
+}
+
 TEST_CASE("Balance", "negative_balance") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
