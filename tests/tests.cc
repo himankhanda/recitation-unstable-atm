@@ -51,7 +51,6 @@ TEST_CASE("Example: Create a new account", "[ex-1]") {
   REQUIRE(transactions[{12345678, 1234}] == empty);
 }
 
-
 // TEST_CASE("Example: Create a new account", "invalid card_num") {
 //   Atm atm;
 //   atm.RegisterAccount(0, 1234, "Sam Sepiol", 300.30);
@@ -88,7 +87,6 @@ TEST_CASE("Example: Create a new account", "[ex-1]") {
 //   REQUIRE(transactions[{12345678, 0}] == empty);
 // }
 
-
 TEST_CASE("Additions", "two additions") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
@@ -107,7 +105,8 @@ TEST_CASE("Additions", "two additions") {
   REQUIRE(transactions[{12345678, 1234}] == empty);
 
   Atm atm;
-  REQUIRE(atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30) == std::invalid_argument);
+  REQUIRE_THROWS_AS(atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30),
+                    std::invalid_argument);
 }
 
 TEST_CASE("Balance", "negative_balance") {
@@ -128,7 +127,6 @@ TEST_CASE("Balance", "negative_balance") {
   REQUIRE(transactions[{12345678, 1234}] == empty);
 }
 
-
 TEST_CASE("Example: Simple widthdraw", "[ex-2]") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
@@ -142,47 +140,44 @@ TEST_CASE("Example: Simple widthdraw", "[ex-2]") {
 TEST_CASE("Account Number", "invalid account number") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
-  REQUIRE(atm.WithdrawCash(43, 1234, 20) == std::invalid_argument);
+  REQUIRE_THROWS_AS(atm.WithdrawCash(43, 1234, 20), std::invalid_argument);
 }
 
 TEST_CASE("ACCOUNT PIN", "invalid account pin") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
-  REQUIRE(atm.WithdrawCash(12345678, 2, 20) == std::invalid_argument);
+  REQUIRE_THROWS_AS(atm.WithdrawCash(12345678, 2, 20), std::invalid_argument);
 }
 
 TEST_CASE("AMOUNT NEGATIVE", "negative amount") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
-  REQUIRE(atm.WithdrawCash(12345678, 2, -20) == std::invalid_argument);
+  REQUIRE_THROWS_AS(atm.WithdrawCash(12345678, 2, -20), std::invalid_argument);
 }
-
 
 TEST_CASE("BALANCE NEGATIVE", "negative balance") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 20);
-  REQUIRE(atm.WithdrawCash(12345678, 2, 22) == std::runtime_error);
+  REQUIRE_THROWS_AS(atm.WithdrawCash(12345678, 2, 22), std::runtime_error);
 }
 
 TEST_CASE("DEposit Account Number", "invalid account number") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
-  REQUIRE(atm.DepositCash(43, 1234, 20) == std::invalid_argument);
+  REQUIRE_THROWS_AS(atm.DepositCash(43, 1234, 20), std::invalid_argument);
 }
 
 TEST_CASE("Deposit ACCOUNT PIN", "invalid account pin") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
-  REQUIRE(atm.DepositCash(12345678, 2, 20) == std::invalid_argument);
+  REQUIRE_THROWS_AS(atm.DepositCash(12345678, 2, 20), std::invalid_argument);
 }
 
 TEST_CASE("Deposit AMOUNT NEGATIVE", "negative amount") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
-  REQUIRE(atm.DepositCash(12345678, 2, -20) == std::invalid_argument);
+  REQUIRE_THROWS_AS(atm.DepositCash(12345678, 2, -20), std::invalid_argument);
 }
-
-
 
 TEST_CASE("Example: Print Prompt Ledger", "[ex-3]") {
   Atm atm;
@@ -201,13 +196,14 @@ TEST_CASE("Example: Print Prompt Ledger", "[ex-3]") {
 TEST_CASE("Ledger Account Number", "invalid account number") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
-  REQUIRE(atm.PrintLedger(43, 1234, 20) == std::invalid_argument);
+  REQUIRE_THROWS_AS(atm.PrintLedger("output.txt", 1234, 20),
+                    std::invalid_argument);
 }
 
 TEST_CASE("Ledger Account Pin", "invalid account pin") {
   Atm atm;
   auto& transactions = atm.GetTransactions();
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
-  REQUIRE(atm.PrintLedger(12345678, 2, 20) == std::invalid_argument);
+  REQUIRE_THROWS_AS(atm.PrintLedger("output.txt", 2, 20),
+                    std::invalid_argument);
 }
-
