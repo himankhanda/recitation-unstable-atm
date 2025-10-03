@@ -202,7 +202,7 @@ TEST_CASE("Ledger Account Number", "invalid account number") {
 
 TEST_CASE("Ledger Account Pin", "invalid account pin") {
   Atm atm;
-  auto& transactions = atm.GetTransactions();
+  // auto& transactions = atm.GetTransactions();
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
   REQUIRE_THROWS_AS(atm.PrintLedger("output.txt", 2, 20),
                     std::invalid_argument);
