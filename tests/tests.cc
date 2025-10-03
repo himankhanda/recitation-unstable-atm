@@ -104,8 +104,8 @@ TEST_CASE("Additions", "two additions") {
   std::vector<std::string> empty;
   REQUIRE(transactions[{12345678, 1234}] == empty);
 
-  Atm atm;
-  REQUIRE_THROWS_AS(atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30),
+  Atm atm2;
+  REQUIRE_THROWS_AS(atm2.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30),
                     std::invalid_argument);
 }
 
