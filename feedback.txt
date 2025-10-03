@@ -1,0 +1,12 @@
+Your test suite did not compile!
+
+tests/tests.cc:107:7: error: redefinition of 'atm'
+  107 |   Atm atm;
+      |       ^
+tests/tests.cc:91:7: note: previous definition is here
+   91 |   Atm atm;
+      |       ^
+1 error generated.
+
+
+score: 0/5
